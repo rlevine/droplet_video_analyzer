@@ -140,6 +140,9 @@ Adding the `--show-video` flag will turn on an interactive video window.
 Specifying `--not-interactive` will advance through frames in the video window
 without requiring a keypress to advance frames.
 
+When running the above examples, an annotated video file and .csv data file will be created in
+the `sample_files/output` directory in the file tree.
+
 ### Interactive Video Window and Annotated Video
 
 ![video window](images/Fleece_04_trimmed2_image_capture_2.png)
