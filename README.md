@@ -30,10 +30,11 @@ by Emma P. Fischer, Martin C. Fischer, David Grass, Isaac Henrion, Warren S. War
 of Duke University.
 
 
+
 This is a first pass at a script to extract droplet counts and sizes from video files
 created with the laser testing device described in the paper. The implementation is based on
-the description in the paper. For testing, I've used the video samples published by the Duke
-team with the paper.
+the description in the paper. For testing, I've used the [video files](https://research.repository.duke.edu/concern/datasets/qv33rx287?locale=en) published by the Duke
+team.
  
 
 ## Installing / Getting started
