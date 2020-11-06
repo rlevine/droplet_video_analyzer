@@ -54,8 +54,13 @@ chosen for the code and clone the repository:
 git clone https://github.com/rlevine/droplet_video_analyzer.git
 ```
 
-Go to the top level directory of the cloned code. If you're running on OSX, I've provided
-a slightly easier way to get started.
+Go to the top level directory of the cloned code:
+
+```
+cd droplet_video_analyzer
+```
+
+If you're running on OSX, I've provided a slightly easier way to get started.
 
 ### OSX
 
@@ -67,7 +72,7 @@ runtime environment for the script:
 conda create --prefix ./envs --file spec-file.txt
 ```
 
-Activate the conda virtual environment from the `envs`directory:
+It will ask you to confirm overwriting the empty `envs` directory. Do so, and then activate the conda virtual environment from the that directory:
 
 ```shell
 conda activate ./envs
@@ -75,8 +80,8 @@ conda activate ./envs
 
 Note that this runtime environment is isolated from any other python environment you have
 on your computer, and will run packages and executables from the `envs` directory. Any other
-packages you install with conda or pip will land in the `envs` directory tree. When you're
-done with this experimentation, you can exit the conda virtual environment by typing
+packages you install with conda or pip will land in the `envs` directory tree. At any time, when you're
+done working with this code, you can exit the conda virtual environment by typing
 
 ```shell
 conda deactivate
