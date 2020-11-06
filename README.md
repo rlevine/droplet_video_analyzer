@@ -38,7 +38,7 @@ team with the paper.
 ## Installing / Getting started
 
 The project is still in the early stages, and is not set up as a python package. 
-I've inlcuded a conda environment specification to bootstrap a working environment quickly.
+I've included a conda environment specification to bootstrap a working environment quickly.
 
 All development so far has been on OSX Mojave 10.14; nothing here has been tested on Windows or Linux.
 
@@ -51,7 +51,7 @@ With Miniconda installed, in a terminal window, go to the destination directory 
 chosen for the code and clone the repository:
 
 ```shell
-git clone https://github.com/rlevine/face_mask_video_analyzer.git
+git clone https://github.com/rlevine/droplet_video_analyzer.git
 ```
 
 Go to the top level directory of the cloned code. If you're running on OSX, I've provided
@@ -104,7 +104,7 @@ conda install -c conda-forge ffmpeg=4.0.2
 conda install -c conda-forge ffmpeg-python Pillow scipy scikit-image prettytable ansi2html
 ```
 
-By default, the conda forge `opencv` build for OSX brings in `ffmpeg 4.0`, which doesn't incude
+By default, the conda forge `opencv` build for OSX brings in `ffmpeg 4.0`, which doesn't include
 H.264 video encoder support, so I'm forcing an update to `ffmpeg 4.0.2`. An H.264 codec is needed
 for writing and converting video files. `opencv 4` seems to have problems with positioning large
 video preview windows, so I'm using `opencv 3.4.2`.
@@ -125,14 +125,14 @@ The script will create the directory `output` in the source directory, containin
 video file and a .csv file with droplet data from the analysis.
 
 ```
-./dva -i sample_files -f Fleece_04.mp4 --show-vdeo
+./dva -i sample_files -f Fleece_04.mp4 --show-video
 ```
 Adding the `--show-video` flag will turn on an interactive video window.
 
 ```
-./dva -i sample_files -f Fleece_04.mp4 --show-vdeo --not-interactive
+./dva -i sample_files -f Fleece_04.mp4 --show-video --not-interactive
 ```
-Specifying `--not-interactive` will adance through frames in the video window
+Specifying `--not-interactive` will advance through frames in the video window
 without requiring a keypress to advance frames.
 
 ### Interactive Video Window and Annotated Video
@@ -228,7 +228,7 @@ In addition, I attempt to use Hu moment invariants calculated from the shape of
 each droplet to identify duplicate droplets. Multiplying the calculated
 Hu moment similarity becomes less effective as droplet size decreases.
 
-Mutiplying droplet distance by the calculated moment similarity yields a confidence
+Multiplying droplet distance by the calculated moment similarity yields a confidence
 factor. `--droplet-similarity` is the upper limit for that factor for droplets
 in a frame series to be considered duplicates.
 
