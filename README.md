@@ -306,7 +306,7 @@ be included in the file.
   --no-audio            Do *not* copy source audio to annotated video output
                         file
 ```
-DO not copy source audio to the video output file.
+Do not copy source audio to the video output file.
 
 ```
   -d, --debug           Print debug output to the terminal window
