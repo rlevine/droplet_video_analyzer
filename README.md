@@ -20,6 +20,7 @@
 
 -->
 
+![version 0.1.0 alpha](https://img.shields.io/badge/version-0.1.0%20alpha-blue) ![python 3.7](https://img.shields.io/badge/python-3.7-yellow)
 
 # Droplet Video Analyzer
 
