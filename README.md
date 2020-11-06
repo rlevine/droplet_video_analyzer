@@ -191,7 +191,7 @@ interface, with defaults.
                         droplet detection threshold; default=62
 ```
 
-The anaysis process converts each video frame to grayscale, and then thresholds
+The analysis process converts each video frame to grayscale, and then thresholds
 each image, ignoring each pixel that isn't brighter than the supplied threshold.
 This allows us to ignore background light scatter and other light artifacts that
 might not be droplets.
@@ -224,7 +224,7 @@ in a prior frame.
 `--distance-threshold` is the maximum distance between a pair of droplet centroids
 for them to be considered as duplicates.
 
-In addition, I attempt to use Hu moment invariants calulated from the shape of
+In addition, I attempt to use Hu moment invariants calculated from the shape of
 each droplet to identify duplicate droplets. Multiplying the calculated
 Hu moment similarity becomes less effective as droplet size decreases.
 
@@ -258,7 +258,7 @@ highest numbers of droplets.
 
 By default, the script will save an annotated video file with droplets identified
 and a graph of droplet detections over time, as well as a .csv file with data on
-all detected droplets for analysis. In additon, the script will write extensive
+all detected droplets for analysis. In addition, the script will write extensive
 progress information to the shell it's running in.
 
 Progress output and video and .csv file generation can be turned off and creation
@@ -271,7 +271,7 @@ of a detailed log file can be turned on.
                         frame
 ```
 The script can display an interactive video window showing the progress of droplet detection,
-frame by frame. By default, you'll need to press keybaord keys to advance the video.
+frame by frame. By default, you'll need to press keyboard keys to advance the video.
 Use `--show-video` to turn on the preview window, and `--not-interactive` to tell it to
 run without needing keyboard interaction to advance from frame to frame.
 
@@ -298,7 +298,7 @@ This hides the yellow droplet history on the video output.
   --output-frames <output frames>
                         number of frames to duplicate for each source frame
 ```
-To create slower output video, specifying a small nummber, usually from 1-4, will write that many
+To create slower output video, specifying a small number, usually from 1-4, will write that many
 frames for each source frame, making the sequence take more time in playback. Audio will not
 be included in the file.
 
@@ -313,7 +313,7 @@ DO not copy source audio to the video output file.
 
 ```
 Provides additional console output, highlights the possible label areas for all droplets and
-shows the droplet sequnce for label positioning from the center of the frame.
+shows the droplet sequence for label positioning from the center of the frame.
 
 ```
  --test                Ignore command line parameters and read them from
@@ -340,9 +340,9 @@ usage: dva [-h] -f <file name> [<file name> ...] [-o <output directory>]
 
 ## Contributing
 
-This code is still very raw. It fine to contact me, Rick Levine, at rick@xoab.us with
+This code is still very raw. It's fine to contact me, Rick Levine, at rick@xoab.us with
 questions and suggestions. Pull requests are welcome, but an email with some
-discusison is probably the best way to start.
+discussion is probably the best way to start.
 
 
 ## Licensing
