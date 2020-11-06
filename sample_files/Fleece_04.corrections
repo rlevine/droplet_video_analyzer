@@ -1,0 +1,31 @@
+# Droplet correction file for video data file:
+
+# 
+
+# The video file was analyzed with these parameter settings:
+
+# video threshold: 62
+# frame history: 1
+# droplet similarity threshold: 30
+# droplet distance threshold: 
+
+# THESE CORRECTIONS MAY NOT BE VALID IF THE VIDEO DATA IS PROCESSED WITH OTHER SETTINGS!
+
+# This file is used to correct droplet history assignments when the video data file is evaluated.
+# All lines starting with "#" are comments and will be ignored, as will any text after a "#"
+# in the middle of a line.
+
+# Blank lines will be ignored, as will any extra whitespace in lines.
+
+# To force a droplet to be ignored when the software is mistakenly identifying it as a repeat
+# of a droplet in a prior frame, but the number of that droplet on a line by itself. (Without
+# the leading number sign, of course.):
+
+# 34
+
+# To indicate a droplet is a repeat of a prior droplet when it was either not assigned or mistakenly
+# assigned to the wrong predecessor, put its number first on a line followed by the number of
+# its correct predecessor:
+
+# 34 30
+
