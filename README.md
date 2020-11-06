@@ -1,3 +1,25 @@
+<!--
+
+# Copyright (c) 2020 Fredrick Levine
+# rick@xoab.us
+#
+# This file is part of Droplet Video Analyzer
+# https://github.com/rlevine/droplet_video_analyzer
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; version 2.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, see <http://www.gnu.org/licenses/>.
+
+-->
+
 
 # Droplet Video Analyzer
 
@@ -9,7 +31,7 @@ of Duke University.
 
 This is a first pass at a script to extract droplet counts and sizes from video files
 created with the laser testing device described in the paper. The implementation is based on
-the from the description in the paper. For testing, I've used the video samples published by the Duke
+the description in the paper. For testing, I've used the video samples published by the Duke
 team with the paper.
  
 
