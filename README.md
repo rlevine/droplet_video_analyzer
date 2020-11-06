@@ -199,7 +199,8 @@ interface, with defaults.
 The analysis process converts each video frame to grayscale, and then thresholds
 each image, ignoring each pixel that isn't brighter than the supplied threshold.
 This allows us to ignore background light scatter and other light artifacts that
-might not be droplets.
+might not be droplets. The threshold value is an 8-bit pixel brigtness, ie from 0 to 255.
+Any pixels dimmer than this value will be ignored.
 
 ```
   -b <border width>, --border <border width>
@@ -230,16 +231,15 @@ in a prior frame.
 for them to be considered as duplicates.
 
 In addition, I attempt to use Hu moment invariants calculated from the shape of
-each droplet to identify duplicate droplets. Multiplying the calculated
-Hu moment similarity becomes less effective as droplet size decreases.
+each droplet to identify duplicate droplets. This technique becomes less effective as droplet size decreases.
 
 Multiplying droplet distance by the calculated moment similarity yields a confidence
 factor. `--droplet-similarity` is the upper limit for that factor for droplets
 in a frame series to be considered duplicates.
 
-`--`frame-history` is the number of prior frames to be examined for matches to droplets
+`--frame-history` is the number of prior frames to be examined for matches to droplets
 in the current frame. I've found that looking at more than the most immediate prior
-frame (``--frame-history` of 1) yields too many false positives in many circumstances.
+frame (`--frame-history` of 1) yields too many false positives in many circumstances.
 
 
 
@@ -345,7 +345,7 @@ usage: dva [-h] -f <file name> [<file name> ...] [-o <output directory>]
 
 ## Contributing
 
-This code is still very raw. It's fine to contact me, Rick Levine, at rick@xoab.us with
+This is early, alpha quality code. It's fine to contact me, Rick Levine, at rick@xoab.us with
 questions and suggestions. Pull requests are welcome, but an email with some
 discussion is probably the best way to start.
 
