@@ -60,7 +60,7 @@ def main():
     # ignoring the rest of the command line flags.
 
     TEST = False
-    TEST = True  # Comment this in to use test args in utils/cl_args.py.
+    # TEST = True  # Comment this in to use test args in utils/cl_args.py.
 
     TEST_ARGS = get_test_args(TEST)
 
