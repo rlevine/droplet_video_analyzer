@@ -253,7 +253,7 @@ class VideoFilePreprocessor:
         if self.index_frame_number % 30 == 0:
             self._second_count += 1
             if self.VERBOSE:
-                print(".", end="")
+                print('.', end='', flush=True)
             if self._second_count % 30 == 0:
                 if self.VERBOSE:
                     print()
