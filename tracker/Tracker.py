@@ -65,7 +65,7 @@ class Tracker:
         frames_before_deregister=10,
         distance_threshold=40,
         confidence_threshold=5.0,
-        droplet_corrections={},
+        droplet_corrections=None,
         droplet_master=None,
         BACK=False,
         VERBOSE=None,
@@ -80,7 +80,10 @@ class Tracker:
         self._SHOW_DROPLET_SUMMARY = True
         self._SHOW_DROPLET_TABLE = True
 
-        self._droplet_corrections = droplet_corrections
+        if droplet_corrections:
+            self._droplet_corrections = droplet_corrections
+        else:
+            self._droplet_corrections = {}
 
         self._droplet_master = droplet_master
 
@@ -449,18 +452,20 @@ class Tracker:
                 # Injecting droplet corrections.
                 # There are three cases we're interested in.
                 # Two happen inside this loop, looking at the matches we've found:
+                #
                 #   1. Don't make a droplet connection at all, even though we have
                 #      a match.
                 #   2. Make a droplet connection other than the one that matched.
-
+                #
                 # And the third case is new droplet assignments we didn't catch:
+                #
                 #   3. Make a droplet connection when one wasn't matched at all.
 
                 if (
                     new_droplet_id in self._droplet_corrections
                     and self._droplet_corrections[new_droplet_id] is None
                 ):
-                    # Case 1 - just skip this droplet
+                    # Case 1 - just skip this droplet.
                     if self._VERBOSE:
                         printc(
                             "Droplet correction: droplet {} will *not* be connected to droplet {}".format(
@@ -479,7 +484,7 @@ class Tracker:
                     new_droplet_id in self._droplet_corrections
                     and original_droplet_id != self._droplet_corrections[new_droplet_id]
                 ):
-                    # Case 2 - substitute new linkage
+                    # Case 2 - substitute new linkage.
                     if self._VERBOSE:
                         printc(
                             "Droplet correction: droplet {} will be connected to droplet {} instead of {}".format(

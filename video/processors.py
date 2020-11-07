@@ -355,7 +355,7 @@ class VideoFrameProcessor:
             frames_before_deregister=self.history,
             confidence_threshold=self.similarity_threshold,
             distance_threshold=self.distance_threshold,
-            droplet_corrections=corrections,
+            droplet_corrections=self._corrections,
             droplet_master=self._video_master,
             VERBOSE=VERBOSE,
         )
