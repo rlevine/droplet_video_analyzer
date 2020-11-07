@@ -8,6 +8,7 @@ tmp*/
 .travis.yml
 archive/
 test_source_video/
+sample_files/output/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
