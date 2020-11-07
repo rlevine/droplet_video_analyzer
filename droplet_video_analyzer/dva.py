@@ -23,16 +23,15 @@
 import cv2
 import time
 import sys
-import os
-from glob import glob
 
 from utils.cl_args import get_test_args
 from utils.cl_args import get_options
 from droplet_video_analyzer.parts import (
     manage_display_and_keyboard,
-    get_video_file_path,
     set_up_output_filenames,
     get_filename_from_path,
+    unpack_input_files,
+    resolve_directory,
 )
 from droplet_video_analyzer.Dispatcher import Dispatcher
 from utils.corrections import get_correction_file_data
@@ -57,11 +56,11 @@ def main():
 
     # If running from an IDE, set TEST to True to use test command line arguments
     # defined in utils.cl_args.get_test_args()
-    # From the command line, using the -d/--debug flag will read the same debug value_1_values,
+    # Or, from the command line, using the ---test flag will read the same values,
     # ignoring the rest of the command line flags.
 
     TEST = False
-    # TEST = True  # Comment this in to use test args in utils/cl_args.py.
+    TEST = True  # Comment this in to use test args in utils/cl_args.py.
 
     TEST_ARGS = get_test_args(TEST)
 
@@ -83,60 +82,36 @@ def main():
     CSV = argv["CSV"]
     video_threshold = argv["threshold"]
 
-    # Print the command line args, if we're testing.
+    # Print the command line string, if we're testing.
     if VERBOSE and TEST_ARGS:
         print("\n{}{}\n".format(get_filename_from_path(__file__), TEST_ARGS))
 
-    file_candidates = []
-    input_directory = os.path.expanduser(argv['input_directory'])
+    input_directory = resolve_directory(dir=argv['input_directory'])
+    output_directory = resolve_directory(dir=argv['output_directory'])
 
-    # Glob expand any supplied file paths in the supplied file input
-    # I assume they want us to look in the supplied input directory, and
-    # that it should be a legit directory.
-    if os.path.exists(input_directory):
-        for file_string in argv["video_files"]:
-            glob_file_path = glob(os.path.join(input_directory, file_string))
-            file_candidates.extend(glob_file_path)
-    else:
-        file_candidates = argv["video_files"]
-
-    # print(file_candidates)  # Debug
+    video_files = unpack_input_files(
+        argv['video_files'],
+        input_directory=input_directory,
+        output_directory=output_directory,
+    )
 
     #
     # Main loop.
     # Process each video file.
     #
 
-    for video_filename in file_candidates:
+    for video_filename in video_files:
 
         #
         # File set-up.
         #
 
-        # Get an absolute path for the supplied video file name,
-        # and skip if the supplied file name doesn't exit.
-
-        # Backed out to a prior environment running
-        # python 3.7 (because opencv video writing debugging)
-        # and assignment in conditional requires python 3.8 :)
-
-        # if (
-        #     video_file_input_path := get_video_file_path(
-        #         video_filename, argv["input_directory"]
-        #     )
-        # ) is None:
-        #     break
-
-        video_file_input_path = get_video_file_path(
-            video_filename, argv["input_directory"]
-        )
-
-        if video_file_input_path is None:
-            break
+        video_file_input_path = video_filename
 
         # Set up all the output file names we'll need.
         output_files = set_up_output_filenames(
-            video_file_input_path, argv_output_dir=argv["output_directory"]
+            video_file_input_path,
+            argv_output_dir=video_files[video_filename]['output_dir'],
         )
 
         # Start saving a log file if requested.
@@ -145,15 +120,18 @@ def main():
 
         # Check to see if a manual correction file for the source video data
         # file exists, load any data, and create a new file if there isn't one.
-
-        droplet_corrections, correction_count = get_correction_file_data(
-            correction_file_path=output_files["correction_file_path"],
-            output_file_path=output_files["video_file_output_path"],
-            video_threshold=video_threshold,
-            frame_history=argv["frame_history"],
-            droplet_similarity=argv["droplet_similarity"],
-            distance_threshold=argv["distance_threshold"],
-        )
+        if CORRECTIONS:
+            droplet_corrections, correction_count = get_correction_file_data(
+                correction_file_path=output_files["correction_file_path"],
+                output_file_path=output_files["video_file_output_path"],
+                video_threshold=video_threshold,
+                frame_history=argv["frame_history"],
+                droplet_similarity=argv["droplet_similarity"],
+                distance_threshold=argv["distance_threshold"],
+            )
+        else:
+            droplet_corrections = None
+            correction_count = None
 
         # Do a scan of the video file for droplets, and create the
         # master droplet catalog for the file.

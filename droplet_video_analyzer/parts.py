@@ -21,44 +21,91 @@
 import cv2
 import os
 import sys
-import re
 import datetime
-import csv
+from glob import glob
 
 from utils.frame_label import add_ui_prompt
-import config.common as config
 
 
-def get_video_file_path(video_filename=None, input_directory=None):
+def unpack_input_files(file_candidates, input_directory=None, output_directory=None):
     """
-    Build an absolute path for the supplied video file name, looking in
-    various locations.
+    Convert input file specs, including relative paths and
+    wildcards, to absolute paths, using either
+    the provided input directory or the current working
+    directory of the script.
 
-    :param video_filename:
-    :return: string video_file_path or None if not found.
+    Will ignore filespecs that don't resolve to files.
+
+    :param file_candidates: list from argv["video_files"]
+    :param input_directory: user-supplied input dir
+    :param output_directory: user-supplied output dir
+    :rtype: dict absolute_input_file_path = [input_directory, output_directory]
     """
-    current_working_dir = os.getcwd()
-    if input_directory:
-        default_video_dir = os.path.expanduser(input_directory)
+
+    resolved_file_candidates = {}
+
+    for string in file_candidates:
+
+        resolved_string = os.path.expanduser(string)  # Expand tilde.
+        if os.path.isfile(resolved_string):
+            # Already an absolute path.
+            resolved_file_candidates[resolved_string] = {}
+
+        elif input_directory:
+            # Look in supplied input directory, if there is one.
+            found_files = glob(os.path.join(input_directory, resolved_string))
+            found_files = [x for x in found_files if os.path.isfile(x)]
+            for found_file in found_files:
+                resolved_file_candidates[found_file] = {}
+
+        else:
+            # Look in current working directory.
+            found_files = glob(os.path.join(os.getcwd(), resolved_string))
+            found_files = [x for x in found_files if os.path.isfile(x)]
+            for found_file in found_files:
+                resolved_file_candidates[found_file] = {}
+
+        # I'm choosing to silently ignore a file spec I can't resolve,
+        # thinking that I might want to provide a series of wildcarded
+        # file specs, some of which might be empty.
+
+        for file in resolved_file_candidates:
+            if output_directory:
+                this_output_dir = output_directory
+            else:
+                this_output_dir = os.path.join(os.path.dirname(file), 'output')
+
+            if input_directory:
+                this_input_dir = input_directory
+            else:
+                this_input_dir = os.path.dirname(file)
+
+            resolved_file_candidates[file] = {
+                'input_dir': this_input_dir,
+                'output_dir': this_output_dir,
+            }
+
+    return resolved_file_candidates
+
+
+def resolve_directory(dir=None):
+    """
+    Given a user-supplied directory, try to return an absolute path.
+
+    :param dir: user-supplied directory
+    :return: an absolute path, or None
+    """
+    if dir:
+        dir = os.path.expanduser(dir)  # Resolve tilde, if any.
+        dir = os.path.abspath(dir)  # Resolve . and .. relative to $cwd
+        if os.path.isdir(dir):
+            # Absolute path - we have a winner.
+            return dir
+        else:
+            # Either we started with None, or dir doesn't exist.
+            return None
     else:
-        # Use their home directory if they haven't told us where to look.
-        default_video_dir = os.path.expanduser("~")
-
-    video_file_input_path = None
-
-    if os.path.isfile(video_filename):
-        # We already have an absolute path.
-        video_file_input_path = video_filename
-    elif os.path.isfile(os.path.join(default_video_dir, video_filename)):
-        # The file in the default video directory.
-        video_file_input_path = os.path.join(default_video_dir, video_filename)
-    elif os.path.isfile(os.path.join(current_working_dir, video_filename)):
-        # The file in the current working directory.
-        video_file_input_path = os.path.join(current_working_dir, video_filename)
-    else:
-        print("\nOops. Can't find video file {}.\n".format(video_filename))
-
-    return video_file_input_path
+        return None  # Just making it explicit
 
 
 def get_file_directory_from_path(file_path):
