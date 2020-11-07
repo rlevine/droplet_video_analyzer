@@ -42,8 +42,11 @@ def add_audio(in_file=None, out_file=None, combined_file=None, VERBOSE=False):
 
     analysis_start_time = time.time()
 
-    QUIET = True
-    # QUIET = False
+    # log_level = 'quiet'
+    log_level = 'error'
+    # log_level = 'info'
+    # log_level = 'verbose'
+    # log_level = 'debug'
 
     video_source_file = ffmpeg.input(out_file)
     audio_source_file = ffmpeg.input(in_file)
@@ -57,10 +60,14 @@ def add_audio(in_file=None, out_file=None, combined_file=None, VERBOSE=False):
         .output(
             combined_file,
             pix_fmt='yuv420p',
+            movflags='faststart',
+            hls_time=10,
+            hls_list_size=0,
             crf=18,
             format='mov',
             shortest=1,
         )
+        .global_args('-loglevel', log_level)
         .overwrite_output()  # I'm confusing it, and it asks to overwrite otherwise??
     )
 
@@ -68,7 +75,7 @@ def add_audio(in_file=None, out_file=None, combined_file=None, VERBOSE=False):
         ffmpeg.compile(output)
     )  # Just for debugging to see what it's sending.
 
-    output.run(quiet=QUIET)
+    output.run()
 
     analysis_end_time = time.time()
 
@@ -97,8 +104,11 @@ def add_audio(in_file=None, out_file=None, combined_file=None, VERBOSE=False):
 
 def get_normalized_audio_level_by_frame(in_file=None):
 
-    QUIET = True
-    # QUIET = False
+    # log_level = 'quiet'
+    log_level = 'error'
+    # log_level = 'info'
+    # log_level = 'verbose'
+    # log_level = 'debug'
 
     # Get file stream info.
     probe = ffmpeg.probe(in_file)
@@ -118,9 +128,12 @@ def get_normalized_audio_level_by_frame(in_file=None):
 
     # Write data to a stream, and suck it back into a numpy array.
     # 's16le' is raw data without header, in 16-bit signed ints.
-    out, _ = audio_source_file.output('pipe:', format='s16le', ac=1).run(
-        capture_stdout=True, quiet=QUIET
+    out, _ = (
+        audio_source_file.output('pipe:', format='s16le', ac=1)
+        .global_args('-loglevel', log_level)
+        .run(capture_stdout=True)
     )
+
     audio = np.frombuffer(out, np.int16)
 
     # Reshape to chunk and eliminate partial frames.
