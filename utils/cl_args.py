@@ -28,16 +28,18 @@ def get_test_args(TEST=False):
             [
                 # fmt: off
 
-                # ' --file ', '*.mp4',
-                # ' --file ', 'Surgical_01.mp4',
-                # ' --file ', 'N95_05.mp4',
-                # ' --file ', 'Bandana_05.mp4',
-                # ' --file ', 'None_04_floater_tighter.mp4',
-                # ' --file ', 'None_04_floater.mp4',
-                # ' --file ', 'None_04_trimmed.mp4',
-                # ' --file ', 'None_04_trimmed_more.mp4',
-                # ' --file ', 'Bandana_05_20_frames.mp4',
-                ' --file ', 'Fleece_04_trimmed2.mp4',
+                # ' ../tmp_fleece_test/*.mp4',
+                # ' Surgical_01.mp4',
+                # ' N95_05.mp4',
+                # ' Fleece_04_40_frame_test.mp4',
+                ' Fleece_04_10_frame_test.mp4',
+                # ' None_04_floater_tighter.mp4',
+                # ' None_04_floater.mp4',
+                # ' None_04_trimmed.mp4',
+                # ' None_04_trimmed_more.mp4',
+                # ' Bandana_05_20_frames.mp4',
+                # ' Bandana_05_20_frames.mp4',
+                # ' Fleece_04_trimmed2.mp4',
                 ' --threshold ', '62',
                 # ' --frame-history ', '1',
                 # ' --droplet-similarity ', '30',
@@ -46,22 +48,23 @@ def get_test_args(TEST=False):
                 # ' --top-10',
                 # ' --quiet',
                 # ' --debug',
-                ' --test',
                 # ' --capture-log',
                 # ' --no-csv',
                 # ' --hide-droplet-history',
                 # ' --not-interactive',
                 # ' --input-dir ', '/Volumes/Large_Backup/mask_evaluaton_video_samples/Video_data_from__Low-cost_measurement_of_facemask_efficacy/data/files/0002_Set02/',
-                ' --input-dir ', '~/Desktop/git/python/fmva/test_source_video',
+                ' --input-dir ', './test_source_video',
+                # ' --input-dir ', '~/Desktop/git/python/fmva/test_source_video',
                 # ' --input-dir ', '/Users/CS255/Desktop/git/python/fmva/tmp_fleece_test',
-                ' --output-dir ', '/Users/CS255/Desktop/git/python/fmva/tmp_output_3',
+                # ' --output-dir ', '/Users/CS255/Desktop/git/python/fmva/tmp_output_3',
                 # ' --output-dir ', '/Users/CS255/Desktop/git/python/fmva/tmp_n95_test/output',
                 # ' --output-dir ', '/Users/CS255/Desktop/git/python/fmva/tmp_fleece_test/output',
                 # ' --no-video-output',
                 # ' --no-audio',
-                ' --apply-corrections',
+                # ' --apply-corrections',
                 # ' --output-frames ', '4',
-                ' --show-video',
+                # ' --show-video',
+                # ' --test',
                 # fmt: on
             ]
         )
@@ -80,9 +83,14 @@ def get_options(TEST_ARGS=None):
     # fmt: off
     group0 = parser.add_argument_group('Input/Output')
 
-    group0.add_argument('-f', '--file', required=False,
-                        nargs='+', dest='video_files', metavar='<file name>',
-                        help='video files to analyze, either absolute or relative paths')
+    # group0.add_argument('-f', '--file', required=False,
+    #                     nargs='+', dest='video_files', metavar='<space-separated file names>',
+    #                     help='video files to analyze, either absolute or relative paths, double-quote if using wildcards')
+
+    group0.add_argument('video_files',
+                        nargs='*', metavar='<file name or names to analyze>',
+                        help='video files to analyze, either absolute or relative paths; double-quote if using wildcards')
+
     group0.add_argument('-o', '--output-dir', metavar='<output directory>',
                         dest='output_directory', action='store', default=None,
                         help='directory for all file output (optional; default will create "output" in video source dir)')
@@ -164,5 +172,4 @@ def get_options(TEST_ARGS=None):
         if args.TEST is True:
             TEST_ARGS = get_test_args(TEST=True)
             args = parser.parse_args(TEST_ARGS.split())
-
     return args
