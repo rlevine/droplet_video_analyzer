@@ -92,7 +92,7 @@ def add_audio(in_file=None, out_file=None, combined_file=None, VERBOSE=False):
         except Exception as error:
             sys.exit(
                 "\n\nOops. Cannot remove intermediate video file!\n{}\n{}\n".format(
-                    output_dir, error
+                    out_file, error
                 )
             )
 
