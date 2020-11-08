@@ -61,7 +61,7 @@ def get_test_args(TEST=False):
                 # ' --output-dir ', '/Users/CS255/Desktop/git/python/fmva/tmp_fleece_test/output',
                 # ' --no-video-output',
                 # ' --no-audio',
-                # ' --apply-corrections',
+                # ' --corrections',
                 # ' --output-frames ', '4',
                 # ' --show-video',
                 # ' --test',
@@ -142,9 +142,9 @@ def get_options(TEST_ARGS=None):
 
     group3 = parser.add_argument_group('Advanced')
 
-    group3.add_argument('--apply-corrections',
+    group3.add_argument('--corrections',
                         dest='CORRECTIONS', action='store_true', default=False,
-                        help='apply droplet corrections from file <video_source>.corrections')
+                        help='create template correction file, and apply droplet corrections from file <video_source>.corrections')
     group3.add_argument('--hide-droplet-history',
                         dest='HIDE_DROPLET_HISTORY', action='store_true', default=False,
                         help='hide historical droplet outlines for chained droplets in video output')

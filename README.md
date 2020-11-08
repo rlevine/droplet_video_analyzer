@@ -126,24 +126,31 @@ You can run the script from the top directory of the distribution. For instance,
 analyze the test video file included in the distribution:
 
 ```
-./dva -i sample_files -f Fleece_04.mp4
+./dva sample_files/Fleece_04.mp4
 ```
-The script will create the directory `output` in the source directory, containing an annotated
+The script will create the directory `output` in the same directory as the source file, containing an annotated
 video file and a .csv file with droplet data from the analysis.
 
 ```
-./dva -i sample_files -f Fleece_04.mp4 --show-video
+./dva sample_files/Fleece_04_40_frame_test.mp4 --show-video
 ```
 Adding the `--show-video` flag will turn on an interactive video window.
+(Fleece_04_40_frame_test.mp4 and Fleece_04_10_frame_test.mp4 are very short video files for
+testing and experimentation)
 
 ```
-./dva -i sample_files -f Fleece_04.mp4 --show-video --not-interactive
+./dva sample_files/Fleece_04_40_frame_test.mp4 --show-video --not-interactive
 ```
 Specifying `--not-interactive` will advance through frames in the video window
 without requiring a keypress to advance frames.
 
 When running the above examples, an annotated video file and .csv data file will be created in
-the `sample_files/output` directory in the file tree.
+the `sample_files/output` directory in the file tree; the `-o`/`--output` flag allows you to set an
+alternate destination directory for the output.
+
+Note that the samples files are drawn from the data published by the research team at Duke University, and
+are covered by a a Creative Commons license. More information can be found in the file accompanying
+[README](sample_files/original_data_README.txt) file
 
 ### Interactive Video Window and Annotated Video
 
@@ -289,14 +296,18 @@ run without needing keyboard interaction to advance from frame to frame.
 #### Advanced options
 
 ```
-  --apply-corrections   apply droplet corrections from file
+  --corrections   create template correction file and apply droplet corrections from file
                         <video_source>.corrections
 ```
 The script will typically miscategorize 2 to 2.5% of droplets as being unique when they're
 really a reappearance of a prior droplet. If more accuracy is needed, corrections can be provided
-to the process by adding droplet numbers to a correction file for a specific video. The script will
-generate an empty correction file, with instructions for completing it in the source video directory.
-If `--apply-corrections` is specified, the provided corrections will be applied.
+to the process by adding droplet numbers to a correction file for a specific video. When the `--correction`
+parameter is present, the script will generate an empty correction file template in the same directory as
+the source file, if it doesn't find one, with instructions for completing the annotation in the file.
+Subsequent runs with the parameter present will use the annotations in the file to correct droplet connections.
+The header of the correction file will document the threshold, similarity and frame history values used to
+generate the original output that is being corrected. Using different values will almost certainly invalidate
+the correction instructions in the file.
 
 ```
   --hide-droplet-history
