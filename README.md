@@ -189,9 +189,9 @@ duplicates.
 #### Input/Output
 
 ```
-  -f <file name> [<file name> ...], --file <file name> [<file name> ...]
+  <file name> [<file name> ...], --file <file name> [<file name> ...]
                         video files to analyze, either absolute or relative
-                        paths
+                        paths, with `.` or  `..`` and wildcards.
   -o <output directory>, --output-dir <output directory>
                         directory for all file output (optional; default will
                         create "output" in video source dir)
@@ -201,7 +201,8 @@ duplicates.
 ```
 
 Input and output directories and source file names are specified separately in the
-interface, with defaults.
+interface, with defaults. Typically, your shell will require file specs with wildcards
+to be enclosed in double quotes.
 
 
 ####  Droplet Detection
