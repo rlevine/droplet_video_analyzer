@@ -148,6 +148,10 @@ When running the above examples, an annotated video file and .csv data file will
 the `sample_files/output` directory in the file tree; the `-o`/`--output` flag allows you to set an
 alternate destination directory for the output.
 
+For convenience in running the script, until there's a proper package for it, add the distribution
+directory to your shell path, or add a symbolic link to a directory already in your path, such
+as `/usr/local/bin`.
+
 Note that the samples files are drawn from the data published by the research team at Duke University, and
 are covered by a a Creative Commons license. More information can be found in the file accompanying
 [README](sample_files/original_data_README.txt) file
@@ -306,7 +310,7 @@ parameter is present, the script will generate an empty correction file template
 the source file, if it doesn't find one, with instructions for completing the annotation in the file.
 Subsequent runs with the parameter present will use the annotations in the file to correct droplet connections.
 The header of the correction file will document the threshold, similarity and frame history values used to
-generate the original output that is being corrected. Using different values will almost certainly invalidate
+generate the original file being corrected. Using different values will almost certainly invalidate
 the correction instructions in the file.
 
 ```
