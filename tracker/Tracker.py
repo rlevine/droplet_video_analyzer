@@ -283,7 +283,7 @@ class Tracker:
                     # in the right ballpark.
                     transformed_score = abs(log_transform(raw_similarity_score))
                     if 308.0 < transformed_score < 308.5:
-                        # Edge case, clsoe to 308.25 from float; too few pixels for
+                        # Edge case, close to 308.25 from float; too few pixels for
                         # moments to work.
                         transformed_score = 0.5  # SWAG that seems to mostly work.
                     shape_similarity[row_index, col_index] = transformed_score
