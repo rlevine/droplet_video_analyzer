@@ -87,9 +87,15 @@ class Grapher:
         # horizontally, so one frame gets one pixel on the x axis.
         # This will break on files longer than about 60 seconds of video for
         # 1920x1080 files.
+        try:
+            y1_scaling_factor = self.y_axis_height / self.y1_max
+        except ZeroDivisionError:
+            y1_scaling_factor = 0
 
-        y1_scaling_factor = self.y_axis_height / self.y1_max
-        y2_scaling_factor = self.y_axis_height / self.y2_max
+        try:
+            y2_scaling_factor = self.y_axis_height / self.y2_max
+        except ZeroDivisionError:
+            y2_scaling_factor = 0
 
         # y axis
         self.canvas = cv2.line(
