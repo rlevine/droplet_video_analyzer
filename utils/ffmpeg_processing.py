@@ -25,7 +25,9 @@ import os
 import sys
 
 
-def add_audio(in_file=None, out_file=None, combined_file=None, VERBOSE=False):
+def add_audio(
+    in_file=None, out_file=None, combined_file=None, VERBOSE=False, DEBUG=False
+):
     """
     Combines audio data from source video file and annotated video
     into one file.
@@ -72,11 +74,12 @@ def add_audio(in_file=None, out_file=None, combined_file=None, VERBOSE=False):
         .overwrite_output()  # I'm confusing it, and it asks to overwrite otherwise??
     )
 
-    command_line = ' '.join(
-        ffmpeg.compile(output)
-    )  # Just for debugging to see what it's sending.
+    if DEBUG:
+        command_line = ' '.join(
+            ffmpeg.compile(output)
+        )  # Just for debugging to see what it's sending.
 
-    print("ffmpeg command line: {}".format(command_line))  # Debug
+        print("ffmpeg audio merge command line: {}".format(command_line))
 
     output.run()
 

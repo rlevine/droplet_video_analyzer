@@ -376,6 +376,7 @@ def main():
                     out_file=output_files["video_file_output_path"],
                     combined_file=output_files["video_audio_file_output_path"],
                     VERBOSE=VERBOSE,
+                    DEBUG=DEBUG,
                 )
 
     # # Printing droplet distance data:for use in determining distance threshold.
