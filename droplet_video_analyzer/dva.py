@@ -38,6 +38,7 @@ from utils.corrections import get_correction_file_data
 from utils.Logger import Transcript
 from utils.video import calculate_fps
 from utils.Csv import CsvFile
+from utils.common import ess
 from utils.ffmpeg_processing import add_audio
 from video.processors import VideoFrameProcessor
 from video.processors import VideoFilePreprocessor
@@ -330,29 +331,42 @@ def main():
             )
             print(
                 """
-{} droplets found in initial scan of video file
-{} unique droplets after duplicate discovery
+{} droplet{} found in initial scan of video file
+{} unique droplet{}} after duplicate discovery
             """.format(
                     sum(video_master.droplet_counts_by_frame),
+                    ess(sum(video_master.droplet_counts_by_frame)),
                     frame_processor.video_total_droplet_count,
+                    ess(frame_processor.video_total_droplet_count),
                 )
             )
 
         if (correction_count is not None and correction_count > 0) and VERBOSE:
             print(
                 """
-{} corrections made by hand (error rate {:.2f}%, {:.2f}% correct)
+{} correction{} made by hand
             """.format(
                     correction_count,
-                    (correction_count / frame_processor.video_total_droplet_count)
-                    * 100,
-                    100
-                    - (
-                        (correction_count / frame_processor.video_total_droplet_count)
-                        * 100
-                    ),
+                    ess(correction_count),
                 )
             )
+            if frame_processor.video_total_droplet_count > 0:
+                print(
+                    """
+(error rate {:.2f}%, {:.2f}% correct)
+                """.format(
+                        (correction_count / frame_processor.video_total_droplet_count)
+                        * 100,
+                        100
+                        - (
+                            (
+                                correction_count
+                                / frame_processor.video_total_droplet_count
+                            )
+                            * 100
+                        ),
+                    )
+                )
 
         # Clean-up.
 
