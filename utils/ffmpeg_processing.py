@@ -22,6 +22,7 @@ import ffmpeg
 import time
 import numpy as np
 import os
+import sys
 
 
 def add_audio(in_file=None, out_file=None, combined_file=None, VERBOSE=False):
@@ -65,7 +66,7 @@ def add_audio(in_file=None, out_file=None, combined_file=None, VERBOSE=False):
             hls_list_size=0,
             crf=18,
             format='mov',
-            shortest=1,
+            shortest=None,
         )
         .global_args('-loglevel', log_level)
         .overwrite_output()  # I'm confusing it, and it asks to overwrite otherwise??
@@ -74,6 +75,8 @@ def add_audio(in_file=None, out_file=None, combined_file=None, VERBOSE=False):
     command_line = ' '.join(
         ffmpeg.compile(output)
     )  # Just for debugging to see what it's sending.
+
+    print("ffmpeg command line: {}".format(command_line))  # Debug
 
     output.run()
 
