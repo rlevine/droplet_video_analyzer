@@ -332,7 +332,7 @@ def main():
             print(
                 """
 {} droplet{} found in initial scan of video file
-{} unique droplet{}} after duplicate discovery
+{} unique droplet{} after duplicate discovery
             """.format(
                     sum(video_master.droplet_counts_by_frame),
                     ess(sum(video_master.droplet_counts_by_frame)),
