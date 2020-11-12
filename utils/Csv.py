@@ -66,10 +66,15 @@ class CsvFile:
 
         :param frame: int counting frame number
         :param droplet: int initial droplet id
-        :param value: list containing assigned droplet_id, pixel area
+        :param value: list containing assigned droplet_id, pixel area, centroid coords
 
         """
-        assigned_droplet_id, droplet_area = value
+        (
+            assigned_droplet_id,
+            droplet_area,
+            droplet_centroid_x,
+            droplet_centroid_y,
+        ) = value
 
         current_row = self._csv_data_dict[(str(frame), str(initial_droplet_id))]
 
@@ -87,6 +92,13 @@ class CsvFile:
                 '',
                 droplet_area,
             ]
+        # Add centroid coordinates to all rows.
+        self._csv_data_dict[(str(frame), str(initial_droplet_id))].extend(
+            [
+                droplet_centroid_x,
+                droplet_centroid_y,
+            ]
+        )
 
     def write(self):
 
@@ -99,11 +111,13 @@ class CsvFile:
         # Header row.
         csv_writer.writerow(
             [
-                "assigned_droplet_id",
-                "initial_droplet_id",
-                "frame",
-                "initial_pixels",
-                "duplicate_pixels",
+                'assigned_droplet_id',
+                'initial_droplet_id',
+                'frame',
+                'initial_pixels',
+                'duplicate_pixels',
+                'centroid_x',
+                'centroid_y',
             ]
         )
 
@@ -121,6 +135,8 @@ class CsvFile:
                     frame_count,
                     self._csv_data_dict[key][1],
                     self._csv_data_dict[key][2],
+                    self._csv_data_dict[key][3],
+                    self._csv_data_dict[key][4],
                 ]
             )
         # Sort the rows by the assigned droplet id.

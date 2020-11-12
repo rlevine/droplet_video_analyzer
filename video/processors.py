@@ -596,7 +596,12 @@ class VideoFrameProcessor:
                 self._csv_file.update_csv_row(
                     str(self.counting_frame_number),
                     str(droplet.initial_id),
-                    [droplet_id, area],
+                    [
+                        droplet_id,
+                        area,
+                        "{:.2f}".format(droplet.centroid[0]),
+                        "{:.2f}".format(droplet.centroid[1]),
+                    ],
                 )
 
         # if self.index_frame_number >= 116:  # Debug breakpoint catcher
