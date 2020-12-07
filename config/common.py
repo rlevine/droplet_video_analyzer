@@ -22,11 +22,12 @@ from PIL import ImageFont
 import numpy as np
 
 import os
+import inspect
 
-base_dir = "/Users/CS255/Desktop/git/python/fmva"
-
-default_video_dir = "./test_source_video"
-
+# Where are we?
+this_filename = inspect.getframeinfo(inspect.currentframe()).filename
+this_path = os.path.dirname(os.path.abspath(this_filename))
+base_dir = os.path.normpath(os.path.join(this_path, os.pardir))
 
 # BGR Colors
 dark_green = (0, 136, 0)
