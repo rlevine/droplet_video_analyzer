@@ -154,6 +154,11 @@ def get_normalized_audio_level_by_frame(in_file=None):
     normalized_audio_by_frame = average_audio_by_frames / average_audio_by_frames.max(
         axis=0
     )
+
+    # Truncate audio to length of video.
+    if len(normalized_audio_by_frame) > num_frames:
+        normalized_audio_by_frame = normalized_audio_by_frame[:num_frames]
+
     # Pad with an extra zero, so we have as many data values as frames.
     # (Since we probably lost the less-than-frame tail of the data when we chunked it.)
     normalized_audio_by_frame = np.pad(
