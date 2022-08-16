@@ -143,7 +143,9 @@ def get_normalized_audio_level_by_frame(in_file=None):
     audio = np.frombuffer(out, np.int16)
 
     # Reshape to chunk and eliminate partial frames.
-    samples_per_frame = int(sample_rate // frame_rate)
+    # ceiling sample rate to frame rate for bigger size, 
+    # to avoid audio chunks slightly longer than number of frames
+    samples_per_frame = int(np.ceil(sample_rate / frame_rate))
     audio = audio[: samples_per_frame * (audio.shape[0] // samples_per_frame)].reshape(
         -1, samples_per_frame
     )
