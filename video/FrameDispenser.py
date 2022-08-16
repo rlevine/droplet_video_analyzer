@@ -88,6 +88,8 @@ class FrameDispenser:
             self.is_empty = True
             return
 
+        self.frame_rate = round(self._video_file.get(cv2.CAP_PROP_FPS))
+
         self.shape = tuple(
             int(x)
             for x in [
