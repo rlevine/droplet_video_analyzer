@@ -215,6 +215,7 @@ def main():
         # reduce that likelihood.
 
         (video_frame_width, video_frame_height) = frame_processor.frame_shape
+        video_frame_rate = frame_processor.frame_rate
         #
         if CAPTURE_VIDEO:
             # Open the output file.
@@ -230,7 +231,7 @@ def main():
                 # cv2.VideoWriter_fourcc("J", "P", "E", "G"),  # writes unreadable file
                 # cv2.VideoWriter_fourcc("A", "C", "V", "1"),  # works w/msg
                 # cv2.VideoWriter_fourcc("0", "0", "0", "0"),  # bogus entry, works w/msg
-                30,
+                video_frame_rate,
                 (int(video_frame_width), int(video_frame_height)),
                 1,
             )

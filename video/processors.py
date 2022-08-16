@@ -296,6 +296,7 @@ class VideoFrameProcessor:
         self._video_file_output_path = video_file_output_path
         self._frame_dispenser = FrameDispenser(self.file_path, PROCESSED_HISTORY=True)
         self.frame_shape = self._frame_dispenser.shape
+        self.frame_rate = self._frame_dispenser.frame_rate
         # Current unprocessed video frame
         self._frame = None
         # Current finished frame
